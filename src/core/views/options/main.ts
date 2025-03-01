@@ -197,9 +197,9 @@ function renderOpenOptions(config: BobConfig) {
 
 	const openOptions = Select([
 		{
-			value: "inline",
-			title: "Inline",
-			selected: config.open === "inline",
+			value: "inline-iframe",
+			title: "Inline iFrame (experimental)",
+			selected: config.open === "inline-iframe",
 		},
 		{
 			value: "window",
@@ -210,7 +210,7 @@ function renderOpenOptions(config: BobConfig) {
 
 	openOptions.addEventListener("change", async () => {
 		await updateConfig({
-			open: openOptions.value as "inline" | "window",
+			open: openOptions.value as "inline-iframe" | "window",
 		});
 		window.location.reload();
 	});
