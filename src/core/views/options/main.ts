@@ -33,6 +33,7 @@ import { renderFooter } from "./footer";
 	document.body.append(container);
 	renderLocale(config);
 	renderTheme(config);
+	renderOpenOptions(config);
 	await renderBobDimensions(config);
 	renderKeybindings(config);
 	renderSearchOptions(config);
@@ -188,5 +189,33 @@ function renderKeybindings(config: BobConfig) {
 		container.append(title, description, inputContainer);
 	}
 
+	document.body.append(container);
+}
+
+function renderOpenOptions(config: BobConfig) {
+	const container = FlexContainer({ gap: "24px", alignItems: "center" });
+
+	const openOptions = Select([
+		{
+			value: "inline",
+			title: "Inline",
+			selected: config.open === "inline",
+		},
+		{
+			value: "window",
+			title: "Window",
+			selected: config.open === "window",
+		},
+	]);
+
+	openOptions.addEventListener("change", async () => {
+		await updateConfig({
+			open: openOptions.value as "inline" | "window",
+		});
+		window.location.reload();
+	});
+
+	container.append(openOptions);
+	document.body.append(GroupHeading("Open Options"));
 	document.body.append(container);
 }
